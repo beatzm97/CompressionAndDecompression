@@ -13,14 +13,14 @@
  }
 
  function getLeft(data, index){
-     if((2*index) <= data.size){
+     if((2*index) <= data.length){
          return (2*index);
      }
      return null;
  }
 
 function getRight(data, index){
-    if((2*index)+1 <= data.size){
+    if((2*index)+1 <= data.length){
         return (2*index)+1;
     }
     return null;
@@ -28,27 +28,28 @@ function getRight(data, index){
 
 function heapify(data){
     //heapSize = data.size;
-    for (var i = Math.floor(data.size/2); i >=0; i--){
+    for (var i = Math.floor((data.length)/2); i >=0; i--){
         min_heapify(data, i);
     }
 }
 function min_heapify(data, i){
-    l = getLeft(i);
-    r = getRight(i);
-    if (l <= data.size && data[l] < data[i]){
+    var l = getLeft(data, i);
+    var r = getRight(data, i);
+    var smallest;
+    if (l <= data.length && data[l] < data[i]){
         smallest = l;
     }
     else 
         smallest = i;
-    if (r <= data.size && data[r] > data[largest]){
+    if (r <= data.length && data[r] > data[smallest]){
         smallest = r;
     }
     if (smallest !== i){
-        temp = data[i];
+        var temp = data[i];
         data[i] = data[smallest];
         data[smallest] = temp;
+        min_heapify(data, smallest);
     }
-    min_heapify(data,smallest)
 }
 
 
