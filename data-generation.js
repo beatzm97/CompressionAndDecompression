@@ -14,9 +14,9 @@ var chance = new Chance();
 var flightData = [];
 var word = '';
 
-for (var i = 0; i < 5; i++){
-    word += (chance.string({length:5, pool:'ABCDEFGHIJKLMNOPQRSTUVWXYZ!?.,-'}));
-    word += " ";
+for (var i = 0; i < 30000; i++){
+    word += (chance.string({pool:'ABCDEFGHIJKLMNOPQRSTUVWXYZ!?.,-'}));
+    // word += " ";
  }
 
  // write to txt file
