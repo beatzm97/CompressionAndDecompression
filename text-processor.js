@@ -14,7 +14,8 @@ try {
     console.log('Error:', e.stack);
 }
 
-const minHeap = require('./min-heap2.js');
+// use functions from min-heap.js file
+const minHeap = require('./min-heap.js');
 
 // determine frequency of each character and add to array of objects
 var data = [];
@@ -48,8 +49,18 @@ function buildData(words){
     }
 }
 
+// verification of minHeap property 
+const assert = require('assert');
+
+function check(data){
+    for (var i = data.length-1; i >= 0; i--){
+        //console.log(minHeap.prototype.getParent(i));
+        var p = minHeap.prototype.getParent(i);
+        assert(data[i].frequency >= data[p].frequency);
+    }
+}
+
 // Testing
 buildData(words);
-//console.log(data);
 minHeap.prototype.heapify(data);
-console.log(data);
+check(data);
