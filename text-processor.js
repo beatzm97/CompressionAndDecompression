@@ -14,6 +14,8 @@ try {
     console.log('Error:', e.stack);
 }
 
+const minHeap = require('./min-heap2.js');
+
 // determine frequency of each character and add to array of objects
 var data = [];
 function buildData(words){
@@ -46,5 +48,8 @@ function buildData(words){
     }
 }
 
+// Testing
 buildData(words);
+//console.log(data);
+minHeap.prototype.heapify(data);
 console.log(data);
