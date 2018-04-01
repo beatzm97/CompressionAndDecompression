@@ -4,13 +4,13 @@
  */
 'use strict';
 
- // load chance
+// load chance
 var Chance = require('chance');
 
- // instantiate chance
+// instantiate chance
 var chance = new Chance();
 
- // use chance
+// use chance
 var flightData = [];
 var word = '';
 
@@ -19,7 +19,7 @@ for (var i = 0; i < 30000; i++){
     // word += " ";
  }
 
- // write to txt file
+// write to txt file
 const fs = require('fs');
 fs.writeFile('uncompressed.txt', word, 'utf-8', function(err){
     if(err){

@@ -2,8 +2,8 @@
  * CSE 3353
  * Project 2: Compression and Decompression
  */
-
 'use strict';
+
 class minHeap{
     constructor (data){
         this.minHeapArr = data;
@@ -51,15 +51,19 @@ class minHeap{
         var min = data[0];
         data[0] = data[data.length-1];
         data.pop();
-        minHeapify(data,data.length-1);
-        //return min;
+        for (var i = 0; i < data.length; i++){
+            this.minHeapify(data, i);
+        }
+        return min;
     }
 
     // adds key to end of array
     // uses minHeapify function to readjust current minHeap
-    insert(key, occ){
-        data.push({char:key,freq:occ});
-        minHeapify(data,data.length-1);
+    insert(data, node){
+        data.push(node);
+        for (var i = 0; i < data.length; i++){
+            this.minHeapify(data, i);
+        }
     }
 };
 

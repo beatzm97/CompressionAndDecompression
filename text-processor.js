@@ -60,7 +60,9 @@ function check(data){
     }
 }
 
-// Testing
+// Functionality
 buildData(words);
 minHeap.prototype.heapify(data);
 check(data);
+
+module.exports = {data: data, words: words};
