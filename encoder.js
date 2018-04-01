@@ -90,7 +90,6 @@ function encoding(words, charTab){
             }
         }
     }
-    console.log(encodeWords);
 }
 
 huffmanEncoding(data);
