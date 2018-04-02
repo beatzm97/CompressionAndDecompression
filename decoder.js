@@ -4,37 +4,54 @@
  */
 'use strict';
 
-// read in data and textfile
-const info = require('./text-processor.js');
-var data = info.data;   // info.data -> minHeap
-var words = info.words; // info.words -> textFile
+// read in encoded text file data
+const fs = require('fs');
 
-// use functions from min-heap.js file
-const minHeap = require('./min-heap.js');
-
-// make the Huffman Encoding Tree
-function huffmanEncoding(data){
-    while(data.length > 1)
-    {
-        var childOne = minHeap.prototype.removeMin(data);
-        var childTwo = minHeap.prototype.removeMin(data);
-        createNode(childOne, childTwo);
-    }
-    characterTable(data, codeTab, charTab);
-    encoding(words, charTab);
-    fileFormat(encodeWords, data);
+try {  
+    var encodeWords = fs.readFileSync('encoded.txt', 'utf8');
+    //console.log(words);    
+} catch(e) {
+    console.log('Error:', e.stack);
 }
 
-// subfunction for tree
-function createNode(childOne, childTwo){
-    var node = {
-        childOne: childOne,
-        childOneCode: 1,
-        childTwo: childTwo,
-        childTwoCode: 0,
-        frequency: childOne.frequency + childTwo.frequency,
-    };
-    minHeap.prototype.insert(data, node)
+// read in original text file data
+const fs2 = require('fs');
+
+try {  
+    var originalWords = fs2.readFileSync('uncompressed.txt', 'utf8');
+    //console.log(words);    
+} catch(e) {
+    console.log('Error:', e.stack);
+}
+
+// verification of huffman encoding and decoding
+const assert = require('assert');
+
+
+function huffmanDecoding(encodeWords){
+    fileFormat(encodeWords);
+    characterTable(data, codeTab, charTab);
+    decoding(words, charTab);
+    assert(decodeWords === originalWords);
+}
+
+
+var words = '';
+var data ='';
+
+function fileFormat(encodeWords){
+    for (var i = 0; i < encodeWords.length; i++){
+        if (encodeWords[i] !== '|'){
+            words += encodeWords[i];
+        }
+        else{
+            for (var j = i+1; j < encodeWords.length; j++){
+                data += encodeWords[j];
+            }
+            data = eval(data);
+            break;
+        }
+    }
 }
 
 // encode data by making table
@@ -82,28 +99,18 @@ function traversal(charTab, codeTab, location){
     codeTab.pop();
 }
 
-var encodeWords = '';
-function encoding(words, charTab){
+var decodeWords = '';
+function decoding(words, charTab){
+    var temp = '';
     for (var i = 0; i < words.length; i++){
+        temp += words[i];
         for (var j = 0; j < charTab.length; j++){
-            if (words[i] === charTab[j].character){
-                encodeWords += charTab[j].code;
+            if (temp === charTab[j].code){
+                decodeWords += charTab[j].character;
+                temp = '';
             }
         }
     }
 }
 
-function fileFormat(encodeWords, data){
-    encodeWords += "|";
-    var output = JSON.stringify(data, null);
-    encodeWords += output;
-    // write to txt file
-    const fs = require('fs');
-    fs.writeFile('encoded.txt', encodeWords, 'utf-8', function(err){
-        if(err){
-            return console.log(err);
-        }
-    });
-}
-
-huffmanEncoding(data);
+huffmanDecoding(encodeWords);
